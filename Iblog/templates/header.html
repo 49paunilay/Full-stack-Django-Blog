@@ -1,0 +1,102 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Bloggers Point</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Actions
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="/contact">Be A Writer </a></li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex" action="/" method="post">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+
+        
+        <!-- inserting modal for signup -->
+        <div class="modal" tabindex="-1" id="signupModel">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Sign Up</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/authiblog/signup">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <label for="username" class="form-label">username</label>
+                    <input name="userName" type="text" class="form-control" id="userName">
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input name="signupEmail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input name="signupPassword" type="password" class="form-control" id="exampleInputPassword1">
+                  </div>
+                  <button type="submit" class="btn btn-outline-success">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal ends here -->
+
+      <!-- inserting modal for signin -->
+      <div class="modal" tabindex="-1" id="signinModel">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Sign In</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" action="/authiblog/signin">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="usernameLogin" class="form-label">Enter Username</label>
+                  <input name="signinEmail" type="text" class="form-control" id="exampleInputEmail2">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input name="signinPassword" type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-outline-success">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal ends here -->
+      {% if user.is_authenticated %}
+        <form action="/authiblog/logout" method="post">
+          {% csrf_token %}
+          <div style="margin-left: 0.4rem;" class="btn-group" role="group" aria-label="Basic outlined example">
+            <button type="submit" class="btn btn-outline-success" >Logout</button>
+          </div>
+        </form>
+      {% else %}
+        <div style="margin-left: 0.4rem;" class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signupModel">Sign Up</button>
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#signinModel">Sign In</button>
+        </div>
+      {% endif %}
+      </div>
+    </div>
+  </nav>

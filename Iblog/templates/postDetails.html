@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block post %}Single Post{% endblock %}
+{% block content %}
+    <div class="container" style="display: flex; align-items:center;justify-content:center; flex-direction:column">
+        <h2>{{singlepost.title}}</h2> 
+        
+        <h5>Written By : {{singlepost.author|safe}} </h5>
+    </div>
+    <div class="container" style="display: flex; align-items:center;justify-content:center;flex-direction:column">
+      <div class="card mb-3" style="max-width: 75%;">
+            <img src="{{singlepost.mage}}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">{{singlepost.content|safe}}</p>
+            </div>
+          </div>
+    </div>
+
+
+    {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}            
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+
+
+    <div class="container">
+      <div class="card-body">
+          <h3>Leave a comment</h3>
+          {% load crispy_forms_tags %}
+          <form method="post" style="margin-top: 1.3em;">
+                    {{ commentform | crispy }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-success btn-lg" style="margin-top:5px">Submit</button>
+          </form>
+      </div>
+
+      <div class="comments_block">
+        <h5>Comments:</h5>
+          {% for comment in comments %}
+          <div class="comments" style="padding: 10px;">
+            <p class="font-weight-bold">
+              {{ comment.username }}
+              <span class=" text-muted font-weight-normal">
+                {{ comment.created_date }}
+              </span>
+            </p>
+            {{ comment.body | linebreaks }}
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+
+{% endblock  %}
